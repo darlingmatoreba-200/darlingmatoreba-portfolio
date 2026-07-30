@@ -1,0 +1,48 @@
+def arithmetic_arranger(problems, show_answers=False):
+    if len(problems) > 5:
+        return 'Error: Too many problems.'
+
+    first_line = []
+    second_line = []
+    dashes_line = []
+    answer_line = []
+
+    for problem in problems:
+        parts = problem.split()
+        if len(parts) != 3:
+            return "Error: Operator must be '+' or '-'."
+        num1, operator, num2 = parts
+
+        if operator not in ('+', '-'):
+            return "Error: Operator must be '+' or '-'."
+
+        if not num1.isdigit() or not num2.isdigit():
+            return 'Error: Numbers must only contain digits.'
+
+        if len(num1) > 4 or len(num2) > 4:
+            return 'Error: Numbers cannot be more than four digits.'
+
+        if operator == '+':
+            result = str(int(num1) + int(num2))
+        else:
+            result = str(int(num1) - int(num2))
+
+        width = max(len(num1), len(num2)) + 2
+
+        top = num1.rjust(width)
+        bottom = operator + num2.rjust(width - 1)
+        dashes = '-' * width
+
+        first_line.append(top)
+        second_line.append(bottom)
+        dashes_line.append(dashes)
+        answer_line.append(result.rjust(width))
+
+    arranged_problems = '    '.join(first_line) + '\n'
+    arranged_problems += '    '.join(second_line) + '\n'
+    arranged_problems += '    '.join(dashes_line)
+
+    if show_answers:
+        arranged_problems += '\n' + '    '.join(answer_line)
+
+    return arranged_problems
